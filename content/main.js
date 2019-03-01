@@ -2,7 +2,10 @@
 * 主模块文件
 */
 import 'babel-polyfill';
-import a from './a';
+// import a from './a';
+var a = require('./a');
+let mb = './b.js';
+const b = require(mb);
 
 /**
  * 入口函数

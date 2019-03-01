@@ -27,7 +27,23 @@ async function transform(filename) {
     });
   };
 
+  const findRequireExpression = () => {
+    let requires = root.find(j.CallExpression, {
+      callee: {
+        name: 'require'
+      }
+    }).filter(requireStatement => requireStatement.value.arguments.length === 1 && requireStatement.value.arguments[0].type === 'Literal');
+    requires.forEach(requireStatement => {
+      let item = requireStatement.parent.parent;
+      console.log(item);
+      requireStatement.value.arguments = [
+        j.literal('testmodule')
+      ];
+    });
+  };
+
   findImportDeclaration();
+  findRequireExpression();
   // body.unshift(createImportRegenerator());
   return root.toSource({quote: 'single'});
 }
